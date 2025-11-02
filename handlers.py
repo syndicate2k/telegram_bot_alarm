@@ -29,7 +29,7 @@ def register_handlers(bot):
                 handle_stop(message)
             return
         
-        if message.text == '❌ Отмена':
+        if message.text == '↩️ В меню':
             handle_start(message)
             return
         
@@ -40,13 +40,13 @@ def register_handlers(bot):
                 raise ValueError('Неверная дата')
 
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            keyboard.add(types.KeyboardButton('❌ Отмена'))
+            keyboard.add(types.KeyboardButton('↩️ В меню'))
             
             msg = bot.send_message(chat_id,'Введите время в формате ЧЧ:ММ\n(например, 14:30)',reply_markup=keyboard)
             bot.register_next_step_handler(msg, lambda m: set_alarm_time(m, alarm_date))
         except:
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            keyboard.add(types.KeyboardButton('❌ Отмена'))
+            keyboard.add(types.KeyboardButton('↩️ В меню'))
             
             msg = bot.send_message(chat_id,'❌ Неверный формат даты!\nВведите дату в формате ДД.ММ.ГГГГ\n(например, 03.11.2025)',reply_markup=keyboard)
             bot.register_next_step_handler(msg, set_alarm_date)
@@ -61,7 +61,7 @@ def register_handlers(bot):
                 handle_stop(message)
             return
         
-        if message.text == '❌ Отмена':
+        if message.text == '↩️ В меню':
             handle_start(message)
             return
         
@@ -75,14 +75,14 @@ def register_handlers(bot):
                 pass
             else:
                 keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                keyboard.add(types.KeyboardButton('❌ Отмена'))
+                keyboard.add(types.KeyboardButton('↩️ В меню'))
                 
                 msg = bot.send_message(chat_id,'❌ Ошибка при установке будильника!',reply_markup=keyboard)
                 bot.register_next_step_handler(msg, set_alarm_date)
                 
         except:
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            keyboard.add(types.KeyboardButton('❌ Отмена'))
+            keyboard.add(types.KeyboardButton('↩️ В меню'))
             
             msg = bot.send_message(chat_id,'❌ Неверный формат времени!\nВведите время в формате ЧЧ:ММ\n(например, 14:30)',reply_markup=keyboard)
             bot.register_next_step_handler(msg, lambda m: set_alarm_time(m, alarm_date))
@@ -93,7 +93,7 @@ def register_handlers(bot):
 
         if message.text == 'Поставить будильник':
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            keyboard.add(types.KeyboardButton('❌ Отмена'))
+            keyboard.add(types.KeyboardButton('↩️ В меню'))
             
             msg = bot.reply_to(message,'Введите дату в формате ДД.ММ.ГГГГ\n(например, 05.11.2025)',reply_markup=keyboard)
             bot.register_next_step_handler(msg, set_alarm_date)
@@ -105,6 +105,8 @@ def register_handlers(bot):
                 bot.reply_to(message, '❌ Нет установленных будильников')
         elif message.text == 'Статус':
             bot.reply_to(message, get_status(chat_id))
+        elif message.text == '↩️ В меню':
+            handle_start(message)
         else:
             bot.reply_to(message, '❌ Нажмите на кнопку')
 
